@@ -43,6 +43,7 @@ This API enables teachers to:
 
 ## Folder Structure
 
+```
 assignment/
 ├── **test**/ # Automated tests using Jest & Supertest
 │ └── (test files...)
@@ -85,6 +86,7 @@ assignment/
 │
 ├── README.md # Project documentation (this file)
 └── tsconfig.json # TypeScript compiler configuration
+```
 
 ## Requirements
 
@@ -98,35 +100,170 @@ assignment/
 ## Installation
 
 1. **Clone the repository:**
+
    ```sh
    git clone https://github.com/TungPho/Assignment-2.git
    cd mock-project
    ```
-2. **Run with Docker (Recommended)**
 
+````
+
+2. **Run manually**
+
+Create seed data
 ```sh
-    cd mock-project
-   docker compose up --build
-```
-
-- Frontend: [http://localhost]
-- Backend: [http://localhost:3000]
-- MySQL: port 3306, user: root, pass: password
-
-3. **Run manually**
-
-```sh
-   cd mock-project
-   cd frontend
+   cd assignment
    npm install
-   npm run dev
+   npm run seed
 ```
 
 ```sh
-    cd mock-project
-cd backend
-npm install
-npm run start
+   cd assignment
+   npm install
+   npm run start
+```
+````
+
+## API Endpoints
+
+GET /api/v1/students (Get list of students)
+
+Example response: (http://localhost:3000/api/students) (JSON):
+
+```json
+{
+  "students": [
+    {
+      "email": "studentjon@gmail.com",
+      "suspended": false
+    },
+    {
+      "email": "studenthon@gmail.com",
+      "suspended": false
+    },
+    {
+      "email": "studentmary@gmail.com",
+      "suspended": false
+    }
+  ]
+}
 ```
 
----
+GET /api/v1/teachers (Get list of teachers)
+
+Example response: (http://localhost:3000/api/teachers) (JSON):
+
+```json
+{
+  "teachers": [
+    {
+      "email": "teacherjoe@gmail.com"
+    },
+    {
+      "email": "teacherken@gmail.com"
+    }
+  ]
+}
+```
+
+GET /api/v1/registrations (Get list of registrations)
+
+Example response: (http://localhost:3000/api/registrations) (JSON):
+
+```json
+{
+  "registrations": [
+    {
+      "TeacherId": 2,
+      "StudentId": 1
+    }
+  ]
+}
+```
+
+--- Main API Endpoints
+
+POST /api/v1/register (Register a student for a teacher)
+
+Example response: (http://localhost:3000/api/registrations) (JSON):
+
+```json
+{
+  "registrations": [
+    {
+      "TeacherId": 2,
+      "StudentId": 1
+    }
+  ]
+}
+```
+
+GET /api/v1/commonstudents (Get common students)
+Example body (JSON):
+
+```json
+{
+  "teacher": "teacherjoe@gmail.com",
+  "students": ["studentjon@gmail.com"]
+}
+```
+
+Example response: (http://localhost:3000/api/commonstudents?teacher=teacherjoe%40gmail.com) (JSON):
+
+```json
+{
+  "students": ["studentjon@gmail.com"]
+}
+```
+
+POST /api/v1/suspend (suspend a student)
+Example body (JSON):
+
+```json
+{
+  "student": "studentmary@gmail.com"
+}
+```
+
+Example response: (http://localhost:3000/api/suspend) (JSON):
+The response will return 204
+
+````
+
+POST /api/v1/suspend (suspend a student)
+Example body (JSON):
+
+```json
+{
+  "student": "studentmary@gmail.com"
+}
+````
+
+Example response: (http://localhost:3000/api/suspend) (JSON):
+The response will return 204
+
+POST /api/v1/suspend (suspend a student)
+Example body (JSON):
+
+```json
+{
+  "student": "studentmary@gmail.com"
+}
+```
+
+POST /api/v1/retrievefornotifications (get students who retrieved the notifications from the teacher)
+Example response: (http://localhost:3000/api/retrievefornotifications) (JSON):
+Example body (JSON):
+
+```json
+{
+  "teacher": "teacherjoe@gmail.com",
+  "notification": "Hello students! @studentagnes@gmail.com @studentmary@gmail.com"
+}
+```
+
+```json
+{
+  "recipients": ["studentjon@gmail.com", "studentagnes@gmail.com"]
+}
+```
