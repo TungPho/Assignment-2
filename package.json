@@ -2,10 +2,11 @@
   "name": "assignment",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "ts-node src/app.ts",
+    "start": "node --loader ts-node/esm src/app.ts",
     "seed": "ts-node src/seed.ts",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"

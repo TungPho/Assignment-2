@@ -1,17 +1,32 @@
 {
   "compilerOptions": {
+    /* 🌐 Output & Module System */
     "target": "ES2020",
-    "module": "commonjs",
-    "lib": ["ES2020"],
+    "module": "ESNext",
+    "moduleResolution": "node",
     "outDir": "./dist",
     "rootDir": "./src",
-    "strict": true,
+
+    /* 🔄 ESM Compatibility */
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
-    "moduleResolution": "node",
-    "types": ["jest", "node"]
+    "isolatedModules": true,
+
+    /* ⚙️ Strict Type Checking */
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+
+    /* 🧪 Jest & Node typings */
+    "types": ["node", "jest"],
+
+    /* 🧠 Support dynamic import for ESM */
+    "moduleDetection": "force"
+  },
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
   },
   "include": ["src/**/*", "tests/**/*"],
   "exclude": ["node_modules", "dist"]

@@ -103,7 +103,7 @@ assignment/
 
    ```sh
    git clone https://github.com/TungPho/Assignment-2.git
-   cd mock-project
+   cd Assignment-2
    ```
 
 ````
@@ -112,13 +112,13 @@ assignment/
 
 Create seed data
 ```sh
-   cd assignment
+   cd Assignment-2
    npm install
    npm run seed
 ```
 
 ```sh
-   cd assignment
+   cd Assignment-2
    npm install
    npm run start
 ```
