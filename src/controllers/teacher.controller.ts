@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import TeacherBusinessService from "../services/teacher.service";
 import Database from "../dbs/db.connect";
+import { ERROR_MESSAGES } from "../constants/error.messages";
 
 const db = Database.getInstance();
 const { Student, Teacher, Registration } = db;
@@ -15,7 +16,9 @@ class TeacherBusinessController {
       const students = await TeacherBusinessService.getAllStudents();
       return res.status(200).json({ students });
     } catch (error) {
-      return res.status(500).json({ error: "Internal Server Error" });
+      return res
+        .status(500)
+        .json({ error: ERROR_MESSAGES.GENERAL.INTERNAL_SERVER_ERROR });
     }
   };
 
@@ -27,7 +30,9 @@ class TeacherBusinessController {
       const teachers = await TeacherBusinessService.getAllTeachers();
       return res.status(200).json({ teachers });
     } catch (error) {
-      return res.status(500).json({ error: "Internal Server Error" });
+      return res
+        .status(500)
+        .json({ error: ERROR_MESSAGES.GENERAL.INTERNAL_SERVER_ERROR });
     }
   };
 
@@ -39,7 +44,9 @@ class TeacherBusinessController {
       const registrations = await TeacherBusinessService.getAllRegistrations();
       return res.status(200).json({ registrations });
     } catch (error) {
-      return res.status(500).json({ error: "Internal Server Error" });
+      return res
+        .status(500)
+        .json({ error: ERROR_MESSAGES.GENERAL.INTERNAL_SERVER_ERROR });
     }
   };
 
@@ -54,7 +61,9 @@ class TeacherBusinessController {
         students?: string[];
       };
       if (!teacher || !Array.isArray(students)) {
-        return res.status(400).json({ error: "Invalid payload" });
+        return res
+          .status(400)
+          .json({ error: ERROR_MESSAGES.GENERAL.INVALID_PAYLOAD });
       }
       const message = await TeacherBusinessService.registerStudentForTeacher(
         teacher,
@@ -62,7 +71,9 @@ class TeacherBusinessController {
       );
       return res.status(201).json({ message });
     } catch (error) {
-      return res.status(500).json({ message: error });
+      return res
+        .status(500)
+        .json({ message: ERROR_MESSAGES.GENERAL.INTERNAL_SERVER_ERROR });
     }
   };
 
@@ -78,7 +89,9 @@ class TeacherBusinessController {
       ? teacherEmails.split(",")
       : [];
     if (!emails || emails.length === 0) {
-      return res.status(400).json({ error: "Missing teacher emails" });
+      return res
+        .status(400)
+        .json({ error: ERROR_MESSAGES.TEACHER.MISSING_EMAILS });
     }
     const commonStudents = await TeacherBusinessService.getCommonStudents(
       emails
@@ -93,17 +106,23 @@ class TeacherBusinessController {
   ): Promise<Response> => {
     const { student } = req.body as { student?: string };
     if (!student) {
-      return res.status(400).json({ error: "No student email provided" });
+      return res
+        .status(400)
+        .json({ error: ERROR_MESSAGES.STUDENT.NO_EMAIL_PROVIDED });
     }
     const studentObj = await Student.findOne({ where: { email: student } });
     if (!studentObj) {
-      return res.status(404).json({ error: "Student not found" });
+      return res.status(404).json({ error: ERROR_MESSAGES.STUDENT.NOT_FOUND });
     }
     const suspended = await TeacherBusinessService.suspenseStudent(studentObj);
     if (!suspended) {
-      return res.status(404).json({ error: "Some Error Occurred" });
+      return res
+        .status(404)
+        .json({ error: ERROR_MESSAGES.GENERAL.SOME_ERROR_OCCURRED });
     }
-    return res.status(204).json({ message: "Suspend Student Successfully!" });
+    return res.status(204).json({
+      message: ERROR_MESSAGES.GENERAL.MISSING_TEACHER_OR_NOTIFICATION,
+    });
   };
 
   // 4. Retrieve Notification Recipients
@@ -116,7 +135,9 @@ class TeacherBusinessController {
       notification?: string;
     };
     if (!teacher || !notification) {
-      return res.status(400).json({ error: "Missing teacher or notification" });
+      return res.status(400).json({
+        error: ERROR_MESSAGES.GENERAL.MISSING_TEACHER_OR_NOTIFICATION,
+      });
     }
     const finalRecipients =
       await TeacherBusinessService.getStudentsWhichRecievesNotifications(

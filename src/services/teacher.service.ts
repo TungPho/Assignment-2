@@ -1,3 +1,4 @@
+import { SUCCESS_MESSAGES } from "../constants/success.messages";
 import Database from "../dbs/db.connect";
 const db = Database.getInstance();
 const { Student, Teacher, Registration } = db;
@@ -55,7 +56,7 @@ class TeacherBusinessService {
       });
       await teacherObj.addStudent(studentObj);
     }
-    return { message: "Register Successfully!" };
+    return { message: SUCCESS_MESSAGES.STUDENT.REGISTER_SUCCESS };
   }
 
   // API 2: Get common students for multiple teachers
