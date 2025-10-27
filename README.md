@@ -107,7 +107,7 @@ assignment/
 
 ````
 
-2. **Run manually**
+2. **Run manually (Must have MySQL DB installed on your local)**
 
 Create seed data
 ```sh

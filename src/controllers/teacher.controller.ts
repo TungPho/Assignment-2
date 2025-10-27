@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import TeacherBusinessService from "../services/teacher.service";
 import Database from "../dbs/db.connect";
 import { ERROR_MESSAGES } from "../constants/error.messages";
+import { SUCCESS_MESSAGES } from "../constants/success.messages";
 
 const db = Database.getInstance();
 const { Student, Teacher, Registration } = db;
@@ -120,8 +121,9 @@ class TeacherBusinessController {
         .status(404)
         .json({ error: ERROR_MESSAGES.GENERAL.SOME_ERROR_OCCURRED });
     }
-    return res.status(204).json({
-      message: ERROR_MESSAGES.GENERAL.MISSING_TEACHER_OR_NOTIFICATION,
+    return res.status(200).json({
+      message: SUCCESS_MESSAGES.STUDENT.SUSPEND_SUCCESS,
+      student,
     });
   };
 

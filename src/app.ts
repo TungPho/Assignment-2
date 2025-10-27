@@ -5,7 +5,6 @@ dotenv.config();
 import express, { Application } from "express";
 import Database from "../src/dbs/db.connect";
 import apiRoutes from "../src/routes/teacher.business.route";
-
 // Lấy instance của database
 const db = Database.getInstance();
 

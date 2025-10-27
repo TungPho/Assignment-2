@@ -2,7 +2,10 @@ import { Sequelize } from "sequelize";
 import { Student, initStudentModel } from "../models/student";
 import { Teacher, initTeacherModel } from "../models/teacher";
 import { Registration, initRegistrationModel } from "../models/registration";
+import dotenv from "dotenv";
 
+// Load biến môi trường
+dotenv.config();
 class Database {
   public static instance: Database;
   public sequelize: Sequelize;
@@ -10,7 +13,7 @@ class Database {
   public Teacher: typeof Teacher;
   public Registration: typeof Registration;
 
-  private constructor() {
+  constructor() {
     this.sequelize = new Sequelize(
       process.env.DB_NAME as string,
       process.env.DB_USER as string,
